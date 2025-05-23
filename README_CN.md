@@ -65,20 +65,36 @@
 
 3.  **配置API和路径:**
     *   复制 `config_lib/example_config.yaml` 并重命名为例如 `config_lib/my_quickstart_config.yaml` (或者，您可以直接修改 `example_config.yaml`，但不推荐用于保留原始示例)。
-    *   **LLM API密钥:** 在您的新配置文件中（例如 `my_quickstart_config.yaml`）设置LLM API密钥。例如，对于OpenAI:
-        ```yaml
-        # API 类型选择（openai, azure, openrouter, anthropic, local）
-        api_type: "openai"
+    *   **LLM API密钥和模型配置:**
+        在您的配置文件中（例如 `my_quickstart_config.yaml`）设置LLM API密钥。系统会依据您在YAML中指定的 `generator_model` 名称内的关键字，来选择对应的API设置块（如 `openai_setting`, `google_setting`）。
+        请确保您选择的 `generator_model` 与YAML中正确配置的 `*_setting` 块相对应，并包含 `api_keys` 和 `base_url`。
 
-        # OpenAI 设置
+        例如，若设置 `generator_model: "gpt-4o"`，则会使用 `openai_setting`:
+        ```yaml
+        # OpenAI 设置 (若模型名称暗示为OpenAI，或默认情况下使用)
         openai_setting:
           api_keys:
-            - "YOUR_OPENAI_API_KEY" # <--- 修改这里
-        # ... 其他API配置可以暂时忽略 ...
+            - "YOUR_OPENAI_API_KEY" # <--- 设置您的OpenAI密钥
+          base_url: "https://api.openai.com/v1"
 
-        # 模型选择 (可以暂时使用默认的gpt-4o，或根据您的API KEY调整)
+        # 若需要，可定义其他设置（如 google_setting, anthropic_setting），
+        # 确保它们与您选择的 generator_model匹配。例如：
+        # google_setting:
+        #   api_key: "YOUR_GOOGLE_API_KEY"
+        #   base_url: "https://generativelanguage.googleapis.com/v1"
+        # anthropic_setting:
+        #   api_key: "YOUR_ANTHROPIC_API_KEY"
+        #   base_url: "https://api.anthropic.com"
+
+        # 各组件的模型选择。
+        # 每个模型名称（如果其使用的生成器依赖基于关键字的设置选择逻辑，
+        # 如 openai_generator.py）都决定了哪个 *_setting 配置块（例如 openai_setting, google_setting）
+        # 必须已正确配置API密钥和base_url。
         generator_model: "gpt-4o"
-        # ... 其他模型可以暂时使用默认 ...
+        entity_extractor_model: "gpt-4o" # 若使用gpt-4o，请确保openai_setting已配置
+        question_generator_model: "gpt-4o" # 请确保openai_setting已配置
+        polisher_model: "gpt-4o"           # 请确保openai_setting已配置
+        filter_model: "gpt-4o"             # 请确保openai_setting已配置
         ```
     *   **数据与模型路径:** 更新配置文件中的以下路径，指向您在步骤2中下载的文件和模型文件夹：
         ```yaml

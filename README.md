@@ -65,20 +65,36 @@ This section provides a minimal guide to quickly get HopWeaver running and gener
 
 3.  **Configure API and Paths:**
     *   Copy `config_lib/example_config.yaml` and rename it, for example, to `config_lib/my_quickstart_config.yaml` (or you can directly modify `example_config.yaml`, but this is not recommended for preserving the original example).
-    *   **LLM API Key:** Set your LLM API key in your new configuration file (e.g., `my_quickstart_config.yaml`). For example, for OpenAI:
-        ```yaml
-        # API type selection (openai, azure, openrouter, anthropic, local)
-        api_type: "openai"
+    *   **LLM API Key and Model Configuration:**
+        In your configuration file (e.g., `my_quickstart_config.yaml`), set your LLM API key. The system uses keywords in the `generator_model` name (specified in the YAML) to select the API settings block (e.g., `openai_setting`, `google_setting`). 
+        Ensure the `generator_model` you choose corresponds to a correctly configured `*_setting` block in your YAML, complete with `api_keys` and `base_url`.
 
-        # OpenAI settings
+        For example, if `generator_model: "gpt-4o"` is set, the `openai_setting` block will be used:
+        ```yaml
+        # OpenAI settings (used if model name implies OpenAI, or by default)
         openai_setting:
           api_keys:
-            - "YOUR_OPENAI_API_KEY" # <--- Modify here
-        # ... Other API configurations can be ignored for now ...
+            - "YOUR_OPENAI_API_KEY" # <--- Set your OpenAI key
+          base_url: "https://api.openai.com/v1"
 
-        # Model selection (you can use the default gpt-4o for now, or adjust based on your API KEY)
+        # Define other settings like google_setting, anthropic_setting if needed,
+        # ensuring they match your chosen generator_model. For example:
+        # google_setting:
+        #   api_key: "YOUR_GOOGLE_API_KEY"
+        #   base_url: "https://generativelanguage.googleapis.com/v1" 
+        # anthropic_setting:
+        #   api_key: "YOUR_ANTHROPIC_API_KEY"
+        #   base_url: "https://api.anthropic.com"
+
+        # Model selection for various components.
+        # Each model name (if it uses a generator that relies on keyword-based setting selection, 
+        # like openai_generator.py) dictates which *_setting block (e.g., openai_setting, google_setting) 
+        # must be correctly configured with API keys and base_url.
         generator_model: "gpt-4o"
-        # ... Other models can use defaults for now ...
+        entity_extractor_model: "gpt-4o" # Ensure openai_setting is configured if this uses gpt-4o
+        question_generator_model: "gpt-4o" # Ensure openai_setting is configured
+        polisher_model: "gpt-4o"           # Ensure openai_setting is configured
+        filter_model: "gpt-4o"             # Ensure openai_setting is configured
         ```
     *   **Data and Model Paths:** Update the following paths in your configuration file to point to the files and model folder you downloaded in Step 2:
         ```yaml
