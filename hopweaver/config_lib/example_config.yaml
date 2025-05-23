@@ -1,0 +1,106 @@
+# ------------------------------------------------Global Paths------------------------------------------------#
+# Paths to models
+model2path:
+  e5: "ret_model/e5-base-v2"
+  gte: "ret_model/iic/gte_sentence-embedding_multilingual-base"
+  e5_instruct: "ret_model/Ceceliachenen/multilingual-e5-large-instruct"
+  bge: "BAAI/bge-base-en-v1.5"
+  contriever: "facebook/contriever"
+  llama2-7B-chat: "meta-llama/Llama-2-7b-chat-hf"
+  llama2-7B: "meta-llama/Llama-2-7b-hf"
+  llama2-13B: "meta-llama/Llama-2-13b-hf"
+  llama2-13B-chat: "meta-llama/Llama-2-13b-chat-hf"
+  llama3-8B-instruct: "model/Llama-3.1-8B-Instruct"
+
+openai_setting:
+# Pooling methods for each embedding model
+model2pooling:
+  e5: "mean"
+  gte: "cls"
+  e5_instruct: "mean"
+  bge: "cls"
+  contriever: "mean"
+  jina: 'mean'
+  dpr: cls
+
+# Indexes path for retrieval models
+method2index:
+  e5: 'index/e5_Flat_fulldoc.index'
+  gte: 'index/gte_Flat.index'
+  e5_instruct: 'index/e5-in_Flat.index'
+  bm25: ''
+  contriever: ~
+
+method2corpus:
+  e5: 'wiki18_fulldoc.jsonl'
+  gte: 'wiki18_fulldoc_trimmed_4096.jsonl'
+  e5_instruct: 'wiki18_fulldoc_trimmed_4096_chunk.jsonl'
+  bm25: 'wiki18_fulldoc_trimmed_4096.jsonl'
+
+
+# ------------------------------------------------Environment Settings------------------------------------------------#
+# Directory paths for data and outputs
+data_dir: "dataset/"
+save_dir: "output/"
+output_dir: "output_wiki"
+gpu_id: "0"
+dataset_name: "nq" # name of the dataset in data_dir
+split: [ "test" ]  # dataset split to load (e.g. train,dev,test)
+
+# Sampling configurations for testing
+test_sample_num: ~  # number of samples to test (only work in dev/test split), if None, test all samples
+random_sample: False # whether to randomly sample the test samples
+
+# Seed for reproducibility
+seed: 2025
+
+# Whether save intermediate data
+save_intermediate_data: True
+save_note: 'experiment'
+
+# -------------------------------------------------Retrieval Settings------------------------------------------------#
+# If set the name, the model path will be find in global paths
+retrieval_method: "gte"  # name or path of the retrieval model. 
+faiss_gpu: False # whether use gpu to hold index
+corpus_path: 'wiki18_fulldoc_trimmed_4096.jsonl'  # path to corpus in '.jsonl' format that store the documents
+
+instruction: ~ # instruction for retrieval model
+retrieval_topk: 5 # number of retrieved documents
+retrieval_batch_size: 256  # batch size for retrieval
+retrieval_use_fp16: True  # whether to use fp16 for retrieval model
+retrieval_query_max_length: 4096  # max length of the query
+save_retrieval_cache: False # whether to save the retrieval cache
+use_retrieval_cache: False # whether to use the retrieval cache
+retrieval_cache_path: ~ # path to the retrieval cache
+retrieval_pooling_method: ~ # set automatically if not provided
+
+use_reranker: False # whether to use reranker
+rerank_model_name: ~ # same as retrieval_method
+rerank_model_path: ~ # path to reranker model, path will be automatically find in `retriever_model2path`
+rerank_pooling_method: ~
+rerank_topk: 5  # number of remain documents after reranking
+rerank_max_length: 4096
+rerank_batch_size: 256 # batch size for reranker
+rerank_use_fp16: True
+
+# -------------------------------------------------Generator Settings------------------------------------------------#
+generator_max_input_len: 10000  # max length of the input
+generator_batch_size: 2 # batch size for generation, invalid for vllm
+generation_params:
+  do_sample: False
+  temperature: 0
+  top_p: 0.9
+  max_tokens: 4096
+use_fid: False # whether to use FID, only valid in encoder-decoder model
+
+generator_model: "gpt-4" 
+entity_extractor_model: "gpt-4"
+question_generator_model: "gpt-4"
+polisher_model: "gpt-4"
+filter_model: "gpt-4"
+
+# API Settings - Replace with your own API keys or remove if not needed
+# These are just placeholders and should be replaced with your own keys
+openai_setting:
+    api_key: "YOUR_API_KEY_HERE"
+    base_url: "https://api.openai.com/v1"

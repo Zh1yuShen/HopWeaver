@@ -1,0 +1,60 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# 虚拟环境
+venv/
+env/
+ENV/
+.env
+
+# 日志文件
+*.log
+
+# 本地配置文件
+*.local.yaml
+*.local.yml
+local_config.yaml
+
+# IDE配置
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 数据集和大型文件（可根据需要修改）
+# datasets/
+# models/
+*.model
+*.bin
+*.pt
+*.pth
+
+# API密钥和敏感信息
+.env
+secrets.yaml
+
+# 缓存
+.cache/
