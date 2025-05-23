@@ -272,7 +272,7 @@ HopWeaver实现了如下优化机制，提高了API调用的稳定性和效率�
 
 这些机制使得HopWeaver在面对大量多跳问题合成时，能更高效地利用LLM API资源。
 
-##### 🌐 多API提供商支持
+#### 3. 多API提供商支持
 
 HopWeaver支持多种API提供商，提供更强的灵活性和冗余能力。您可以在配置文件中配置不同的提供商：
 
@@ -325,7 +325,7 @@ GLM_setting:
 - **OpenRouter**: 可访问 QwQ-32B, Gemma-3-27B 等模型
 - **GLM**: GLM-4-9B 和其他 SiliconFlow 支持的模型
 
-##### 🗺️ 全局路径映射配置
+#### 4. 全局路径映射配置
 
 HopWeaver使用全局路径映射来高效管理模型路径、索引和语料库：
 
@@ -359,7 +359,7 @@ method2corpus:
 - **自动解析**：系统根据方法选择自动解析对应路径
 - **可扩展性**：易于添加新的模型和语料库
 
-##### 🔧 检索器高级参数
+#### 5. 检索器高级参数
 
 为了精细控制检索过程，可配置以下高级参数：
 
@@ -405,7 +405,7 @@ retrieval_cache_path: ~        # 检索缓存文件路径
 - 根据GPU内存调整 `reranker_batch_size`
 - 对于重复实验相同查询，启用缓存可提高效率
 
-#### 📊 下载Wiki数据集
+#### 6. 下载Wiki数据集
 
 您需要下载`wiki18_fulldoc_trimmed_4096.jsonl`数据文件，这是我们预处理好的Wiki数据集，包含截取了文档长度小于4096的Wiki文章。
 
@@ -430,7 +430,7 @@ retrieval_cache_path: ~        # 检索缓存文件路径
 - `doc_size`: 文档内容的字符长度
 - `contents`: 文档的完整正文内容
 
-#### 下载GTE嵌入模型
+#### 7. 下载GTE嵌入模型
 
 HopWeaver使用[GTE](https://huggingface.co/iic/gte_sentence-embedding_multilingual-base)多语言模型进行检索。您可以直接从Hugging Face下载该模型，并在配置文件中指定路径：
 
@@ -440,7 +440,7 @@ model2path:
   gte: "您下载的GTE模型路径"
 ```
 
-#### 下载或构建索引
+#### 8. 下载或构建索引
 
 您可以选择下载我们预构建好的索引文件(
  [huggingface](https://huggingface.co/datasets/Shenzy2/HopWeaver_Data) or [modelscope](https://www.modelscope.cn/datasets/szyszy/HopWeaver_Data))，或自行构建：

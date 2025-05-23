@@ -273,7 +273,7 @@ HopWeaver implements the following optimization mechanisms to improve the stabil
 
 These mechanisms enable HopWeaver to utilize LLM API resources more efficiently when synthesizing a large number of multi-hop questions.
 
-#### 📊 Download Wiki Dataset
+#### 3. Download Wiki Dataset
 
 You need to download the `wiki18_fulldoc_trimmed_4096.jsonl` data file, which is our preprocessed Wiki dataset containing Wikipedia articles with document length trimmed to under 4096 characters.
 
@@ -298,7 +298,7 @@ For comparison with HotpotQA, 2wiki, and musique datasets mentioned in our paper
 - `doc_size`: Character length of the document content
 - `contents`: Complete full text content of the document
 
-#### 🌐 Multi-API Provider Support
+#### 4. Multi-API Provider Support
 
 HopWeaver supports multiple API providers for enhanced flexibility and redundancy. You can configure different providers in your configuration file:
 
@@ -351,7 +351,7 @@ GLM_setting:
 - **OpenRouter**: Access to models like QwQ-32B, Gemma-3-27B, etc.
 - **GLM**: GLM-4-9B, and other SiliconFlow supported models
 
-#### 🗺️ Global Path Mapping Configuration
+#### 5. Global Path Mapping Configuration
 
 HopWeaver uses global path mapping to efficiently manage model paths, indexes, and corpora:
 
@@ -385,7 +385,7 @@ method2corpus:
 - **Automatic Resolution**: System automatically resolves paths based on method selection
 - **Scalability**: Easy to add new models and corpora
 
-#### 🔧 Advanced Retriever Parameters
+#### 6. Advanced Retriever Parameters
 
 For fine-tuned control over the retrieval process, configure these advanced parameters:
 
@@ -431,7 +431,7 @@ retrieval_cache_path: ~        # Path to retrieval cache file
 - Adjust `reranker_batch_size` based on your GPU memory
 - Enable caching for repeated experiments with same queries
 
-#### Download GTE Embedding Model
+#### 7. Download GTE Embedding Model
 
 HopWeaver uses [GTE](https://huggingface.co/iic/gte_sentence-embedding_multilingual-base) multilingual model for retrieval. You can download the model directly from Hugging Face and specify the path in the configuration file:
 
@@ -441,7 +441,7 @@ model2path:
   gte: "path/to/your/downloaded/GTE/model"
 ```
 
-#### Download or Build Index
+#### 8. Download or Build Index
 
 You can choose to download our pre-built index files (
  [huggingface](https://huggingface.co/datasets/Shenzy2/HopWeaver_Data) or [modelscope](https://www.modelscope.cn/datasets/szyszy/HopWeaver_Data)), or build them yourself:
