@@ -12,41 +12,54 @@ pip install -r requirements.txt
 
 #### 2. 配置 LLM API
 
-在使用系统之前，您需要在配置文件中配置 LLM API。检查并修改 `config_lib/example_config.yaml`，重点关注以下关键设置：
+要使用本系统，请在您的 `config_lib/example_config.yaml`（或其副本）中配置LLM API。关键在于 `flashrag/generator/openai_generator.py` 脚本会基于您在 `generator_model` 中指定的模型名称中的**关键字**，从您的YAML文件中选择一个API配置块（例如 `openai_setting`, `google_setting`, `anthropic_setting`, `deepseek_setting`）。
+
+- 如果 `generator_model` 包含 `"gemini"` (例如, `"gemini-1.5-pro"`)，脚本将尝试使用您YAML中的 `google_setting` 配置块。
+- 如果 `generator_model` 包含 `"claude"` (例如, `"claude-3-sonnet-20240229"`)，它将使用 `anthropic_setting` 配置块。
+- 如果 `generator_model` 包含 `"deepseek"` (例如, `"deepseek-chat"`)，它将使用 `deepseek_setting` 配置块。
+- 如果没有找到这些关键字（或其他内部定义的关键字），则默认使用 `openai_setting` 配置块 (例如, 对于像 `"gpt-4o"` 这样的模型)。
+
+您**必须**确保配置文件中包含正确命名的设置块 (例如, `google_setting`)，并且该块包含所选模型提供商所需的API密钥和任何其他必要参数。
 
 ```yaml
-# API 类型选择（openai, azure, openrouter, anthropic, local）
-api_type: "openai"
-
-# OpenAI 设置
+# 示例：OpenAI 设置 (如果 generator_model 为例如 "gpt-4o"，
+# 或在 generator_model 名称中未找到如 "gemini", "claude", "deepseek" 等关键字时，将使用此配置块)
 openai_setting:
   api_keys:
     - "your-openai-api-key-1"
     - "your-openai-api-key-2"
     - "your-openai-api-key-3"
+  base_url: "https://api.openai.com/v1"
 
-# 模型选择
+# 示例：Google 设置 (如果 generator_model 包含 "gemini"，将使用此配置块)
+# 如果您将 generator_model 设置为 Gemini 模型，请确保此块存在且已正确填写。
+# google_setting:
+#   api_key: "YOUR_GOOGLE_API_KEY"
+#   base_url: "YOUR_GOOGLE_BASE_URL" # 例如 https://generativelanguage.googleapis.com/v1
+
+# 示例：Anthropic 设置 (如果 generator_model 包含 "claude"，将使用此配置块)
+# anthropic_setting:
+#   api_key: "YOUR_ANTHROPIC_API_KEY"
+#   base_url: "YOUR_ANTHROPIC_BASE_URL" # 例如 https://api.anthropic.com
+
+# 示例：DeepSeek 设置 (如果 generator_model 包含 "deepseek"，将使用此配置块)
+# deepseek_setting:
+#   api_key: "YOUR_DEEPSEEK_API_KEY"
+#   base_url: "YOUR_DEEPSEEK_BASE_URL" # 例如 https://api.deepseek.com/v1
+
+# 不同组件的模型选择。
+# 您为 generator_model (以及其他也使用 openai_generator.py 的 *_model 字段)
+# 提供的名称决定了上方哪个 <provider>_setting 配置块必须存在且已正确配置。
 generator_model: "gpt-4o"
-entity_extractor_model: "gpt-4o"
+entity_extractor_model: "gpt-4o" # 假设此模型名称也映射到 openai_setting 或有其自己的逻辑
 question_generator_model: "gpt-4o"
 polisher_model: "gpt-4o"
 filter_model: "gpt-4o"
 ```
 
-> **注意**：根据您使用的模型类型，您可能需要修改 `HopWeaver/flashrag/generator/openai_generator.py` 文件中的参数设置和 API 选择逻辑。例如，如果您想使用 Google 的 Gemini 模型，您需要在 `openai_generator.py` 中添加类似以下的代码：
-> 
-> ```python
-> # 检测模型类型并选择对应的配置
-> if "gemini" in self.model_name.lower():
->     self.openai_setting = config["google_setting"]
-> elif "claude" in self.model_name.lower():
->     self.openai_setting = config["anthropic_setting"]
-> # 其他模型类型判断...
-> else:
->     self.openai_setting = config["openai_setting"]
-> ```
-> 
-> 同时，不同模型（如 GPT-4、Claude、Qwen、DeepSeek 等）可能需要不同的参数配置，如 temperature、top_p、max_tokens 等。请根据您选择的模型特性进行相应调整。
+> **代码参考**：具体的关键字到设置块的映射逻辑在 `HopWeaver/flashrag/generator/openai_generator.py` 中实现。请查看此文件以了解模型名称是如何被解析以选择像 `config["google_setting"]`、`config["anthropic_setting"]` 等配置节的。如果未匹配到其他特定关键字，则默认为 `config["openai_setting"]`。
+
+同时，不同模型（如 GPT-4、Claude、Qwen、DeepSeek 等）可能需要不同的生成参数（例如 temperature、top_p、max_tokens）。请根据您模型的特性，在所选的 `*_setting` 配置块或配置文件的 `generation_params` 部分进行适当设置。
 
 ##### 🤖 模型选择建议
 

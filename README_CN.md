@@ -119,7 +119,7 @@
 4.  **运行示例合成:**
     使用您配置好的文件（例如 `my_quickstart_config.yaml`）运行一个简单的桥接问题合成任务：
     ```bash
-    python -m hopweaver.generate_and_evaluate_bridge --config ./config_lib/my_quickstart_config.yaml --count 3 --name quick_test_bridge
+    python -m hopweaver.generate_and_evaluate_bridge --config ./config_lib/my_quickstart_config.yaml --count 3 --name quick_test_bridge --retriever standard
     ```
     这将会生成3个桥接问题，并将结果保存在 `output/quick_test_bridge/` 目录下。
 

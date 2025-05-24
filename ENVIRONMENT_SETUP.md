@@ -12,41 +12,54 @@ pip install -r requirements.txt
 
 #### 2. Configure LLM API
 
-Before using the system, you need to configure the LLM API in your configuration file. Check and modify `config_lib/example_config.yaml`, focusing on these key settings:
+To use the system, configure the LLM API in your `config_lib/example_config.yaml` (or a copy). The crucial part is that the `flashrag/generator/openai_generator.py` script selects an API configuration block from your YAML file (e.g., `openai_setting`, `google_setting`, `anthropic_setting`, `deepseek_setting`) based on **keywords found in the `generator_model` name you specify**.
+
+- If `generator_model` includes `"gemini"` (e.g., `"gemini-1.5-pro"`), the script will attempt to use the `google_setting` block from your YAML.
+- If `generator_model` includes `"claude"` (e.g., `"claude-3-sonnet-20240229"`), it will use the `anthropic_setting` block.
+- If `generator_model` includes `"deepseek"` (e.g., `"deepseek-chat"`), it will use the `deepseek_setting` block.
+- If none of these (or other internally defined) keywords are found, it defaults to using the `openai_setting` block (e.g., for models like `"gpt-4o"`).
+
+You **must** ensure that the YAML configuration file contains the correctly named setting block (e.g., `google_setting`) and that this block contains the necessary API key(s) and any other required parameters for the chosen model provider.
 
 ```yaml
-# API type selection (openai, azure, openrouter, anthropic, local)
-api_type: "openai"
-
-# OpenAI settings
+# Example: OpenAI settings (this block is used if generator_model is e.g., "gpt-4o", 
+# or if no keywords like "gemini", "claude", "deepseek" are found in the generator_model name)
 openai_setting:
   api_keys:
     - "your-openai-api-key-1"
     - "your-openai-api-key-2"
     - "your-openai-api-key-3"
+  base_url: "https://api.openai.com/v1"
 
-# Model selection
+# Example: Google settings (this block would be used if generator_model contains "gemini")
+# Make sure this block exists and is correctly filled if you set generator_model to a Gemini model.
+# google_setting:
+#   api_key: "YOUR_GOOGLE_API_KEY"
+#   base_url: "YOUR_GOOGLE_BASE_URL" # e.g., https://generativelanguage.googleapis.com/v1
+
+# Example: Anthropic settings (this block would be used if generator_model contains "claude")
+# anthropic_setting:
+#   api_key: "YOUR_ANTHROPIC_API_KEY"
+#   base_url: "YOUR_ANTHROPIC_BASE_URL" # e.g., https://api.anthropic.com
+
+# Example: DeepSeek settings (this block would be used if generator_model contains "deepseek")
+# deepseek_setting:
+#  api_key: "YOUR_DEEPSEEK_API_KEY"
+#  base_url: "YOUR_DEEPSEEK_BASE_URL" # e.g., https://api.deepseek.com/v1
+
+# Model selection for different components.
+# The name you provide for generator_model (and other *_model fields if they also use openai_generator.py)
+# dictates which <provider>_setting block above must be present and correctly configured.
 generator_model: "gpt-4o"
-entity_extractor_model: "gpt-4o"
+entity_extractor_model: "gpt-4o" # Assumes this also uses a model name that maps to openai_setting or has its own logic
 question_generator_model: "gpt-4o"
 polisher_model: "gpt-4o"
 filter_model: "gpt-4o"
 ```
 
-> **Note**: Depending on the type of model you\'re using, you may need to modify the parameter settings and API selection logic in the `HopWeaver/flashrag/generator/openai_generator.py` file. For example, if you want to use Google\'s Gemini model, you need to add code similar to the following in `openai_generator.py`:
+> **Code Reference**: The specific keyword-to-setting-block mapping logic is implemented in `HopWeaver/flashrag/generator/openai_generator.py`. Review this file to see exactly how model names are parsed to select configuration sections like `config["google_setting"]`, `config["anthropic_setting"]`, etc. It defaults to `config["openai_setting"]` if no other specific keywords are matched.
 
-```python
-# Detect model type and select corresponding configuration
-if "gemini" in self.model_name.lower():
-    self.openai_setting = config["google_setting"]
-elif "claude" in self.model_name.lower():
-    self.openai_setting = config["anthropic_setting"]
-# Other model type detection...
-else:
-    self.openai_setting = config["openai_setting"]
-```
-
-Additionally, different models (such as GPT-4, Claude, Qwen, DeepSeek, etc.) may require different parameter configurations, such as temperature, top_p, max_tokens, etc. Please adjust accordingly based on the characteristics of your chosen model.
+Additionally, different models (such as GPT-4, Claude, Qwen, DeepSeek, etc.) may require different generation parameters (e.g., temperature, top_p, max_tokens). Ensure these are appropriately set within the chosen `*_setting` block or the `generation_params` section of your configuration, as per your model's requirements.
 
 ##### 🤖 Model Selection Recommendations
 

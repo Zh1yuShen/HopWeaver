@@ -119,7 +119,7 @@ This section provides a minimal guide to quickly get HopWeaver running and gener
 4.  **Run Sample Synthesis:**
     Use your configured file (e.g., `my_quickstart_config.yaml`) to run a simple bridge question synthesis task:
     ```bash
-    python -m hopweaver.generate_and_evaluate_bridge --config ./config_lib/my_quickstart_config.yaml --count 3 --name quick_test_bridge
+    python -m hopweaver.generate_and_evaluate_bridge --config ./config_lib/my_quickstart_config.yaml --count 3 --name quick_test_bridge --retriever standard
     ```
     This will generate 3 bridge questions and save the results in the `output/quick_test_bridge/` directory.
 
