@@ -60,7 +60,7 @@ This section provides a minimal guide to quickly get HopWeaver running and gener
 
 2.  **Prepare Core Data and Models:**
     *   **Download Preprocessed Wiki Dataset:** Download the `wiki18_fulldoc_trimmed_4096.jsonl` file from [Hugging Face](https://huggingface.co/datasets/Shenzy2/HopWeaver_Data) or [ModelScope](https://www.modelscope.cn/datasets/szyszy/HopWeaver_Data).
-    *   **Download GTE Embedding Model:** Download the GTE model (usually a folder containing multiple files) from [Hugging Face](https://huggingface.co/iic/gte_sentence-embedding_multilingual-base).
+    *   **Download GTE Embedding Model:** Download the GTE model from [Hugging Face](https://huggingface.co/iic/gte_sentence-embedding_multilingual-base).
     *   **Download Pre-built FAISS Index:** Download the pre-built `gte_Flat.index` file (recommended) from [Hugging Face](https://huggingface.co/datasets/Shenzy2/HopWeaver_Data) or [ModelScope](https://www.modelscope.cn/datasets/szyszy/HopWeaver_Data).
 
 3.  **Configure API and Paths:**

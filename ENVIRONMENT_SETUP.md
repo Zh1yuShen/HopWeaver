@@ -220,6 +220,18 @@ HopWeaver supports three retrieval methods:
 - **diverse**: Diverse retrieval, using MMR algorithm to balance relevance and diversity
 - **rerank**: Two-stage retrieval, first diverse retrieval then fine-grained reranking with trained model
 
+**🔄 Reranker Model Configuration:**
+
+HopWeaver supports using reranker models to further optimize the ranking of retrieval results. You can choose from the following reranker models:
+
+**Open-Source Reranker Models:**
+- **[BAAI/bge-reranker-v2-m3](https://huggingface.co/BAAI/bge-reranker-v2-m3)**: This is a lightweight multilingual reranker model based on bge-m3, with strong multilingual capabilities, easy deployment, and fast inference. The model supports Chinese and English and shows excellent performance on various benchmarks.
+
+**Custom Fine-tuned Reranker:**
+- **HopWeaver Fine-tuned Reranker**: We have fine-tuned a reranker based on specific multi-hop QA data, specifically optimized for document retrieval in multi-hop reasoning tasks. This model performs better when synthesizing multi-hop complementary documents retrieval. (Model link will be published on [HuggingFace]() and [ModelScope]() soon)
+
+**Reranker Configuration Examples:**
+
 ```yaml
 # Retriever Configuration
 retriever_type: "rerank"  # Retrieval method selection, options: "standard", "diverse" or "rerank"

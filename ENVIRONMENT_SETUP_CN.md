@@ -195,6 +195,18 @@ HopWeaver支持三种检索方法：
 - **diverse**：多样性检索，使用MMR算法平衡相关性和多样性
 - **rerank**：两阶段检索，先进行多样性检索，再使用训练好的重排模型精细排序
 
+**🔄 重排器模型配置：**
+
+HopWeaver支持使用重排器模型进一步优化检索结果的排序。您可以选择以下重排器模型：
+
+**开源重排器模型：**
+- **[BAAI/bge-reranker-v2-m3](https://huggingface.co/BAAI/bge-reranker-v2-m3)**: 这是一个基于bge-m3的轻量级多语言重排器模型，具有强大的多语言能力，易于部署，推理速度快。该模型支持中文和英文，在多种基准测试中表现出色。
+
+**自定义微调重排器：**
+- **HopWeaver微调重排器**: 我们基于特定的多跳问答数据进行了微调，专门针对多跳问题的文档检索进行了优化。该模型在处理跨文档推理任务时表现更佳。（模型链接即将在HuggingFace或ModelScope上发布）
+
+**重排器配置示例：**
+
 ```yaml
 # 检索器配置
 retriever_type: "rerank"  # 检索方法选择，选项："standard"、"diverse" 或 "rerank"
@@ -205,13 +217,12 @@ lambda1: 0.87  # 查询相关性权重 (0-1)
 lambda2: 0.03  # 原始文档多样性权重 (0-1)
 lambda3: 0.1   # 已选文档多样性权重 (0-1)
 
-# 性能参数
-use_fp16: true              # 使用FP16加速
-query_max_length: 512       # 查询最大长度
-passage_max_length: 8196    # 文档最大长度
-reranker_batch_size: 16     # 重排批处理大小（仅rerank方法）
-reranker_normalize: false   # 是否标准化重排分数（仅rerank方法）
-reranker_devices: ["cuda:0"] # 重排使用的设备（仅rerank方法）
+# 重排器性能参数
+use_reranker: true            # 启用重排器
+rerank_topk: 5               # 重排后保留的文档数量
+rerank_max_length: 4096      # 重排器输入的最大长度
+rerank_batch_size: 256       # 重排批处理大小
+rerank_use_fp16: true        # 使用FP16加速重排器推理
 
 # 检索缓存（性能优化）
 save_retrieval_cache: false    # 保存检索结果到缓存
