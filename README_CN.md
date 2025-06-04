@@ -60,7 +60,7 @@
 
 2.  **准备核心数据与模型:**
     *   **下载预处理的Wiki数据集:** 从 [Hugging Face](https://huggingface.co/datasets/Shenzy2/HopWeaver_Data) 或 [ModelScope](https://www.modelscope.cn/datasets/szyszy/HopWeaver_Data) 下载 `wiki18_fulldoc_trimmed_4096.jsonl` 文件。
-    *   **下载GTE嵌入模型:** 从 [Hugging Face](https://huggingface.co/iic/gte_sentence-embedding_multilingual-base) 下载 GTE 模型。
+    *   **下载GTE嵌入模型:** 从 [Hugging Face](https://huggingface.co/Alibaba-NLP/gte-multilingual-base) 或 [ModelScope](https://www.modelscope.cn/models/iic/gte_sentence-embedding_multilingual-base) 下载 GTE 模型。
     *   **下载预构建的FAISS索引:** 从 [Hugging Face](https://huggingface.co/datasets/Shenzy2/HopWeaver_Data) 或 [ModelScope](https://www.modelscope.cn/datasets/szyszy/HopWeaver_Data) 下载预构建的 `gte_Flat.index` 文件 (推荐)。
 
 3.  **配置API和路径:**
