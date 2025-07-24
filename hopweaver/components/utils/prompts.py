@@ -496,9 +496,9 @@ You are a **strict and discerning** Multi-Hop Question Answering (MHQA) dataset 
    - **Consistency**: Is the information in the question **completely and strictly** consistent with the provided passages, without **any** contradictions or hallucinations, **even subtle ones**?
    - **Question Answerability**: Can the exact question be clearly **and unambiguously** answered based **solely** on the given passages?
    - **Answer-Question Consistency**: Does the provided answer completely, accurately, and consistently address the question?
-   - **Information Integration Ability**: Does the question successfully **and logically** integrate information from multiple documents, requiring the answerer to connect different sources **without forcing unnatural connections**?
+   - **Information Integration Ability**: Does the question **coherently and logically** integrate information from multiple documents, requiring the answerer to connect different sources **without forcing unnatural connections**?
    - **Reasoning Path Guidance**: Does the question clearly guide the answerer through a multi-step reasoning process, rather than being overly vague or direct?
-   - **Logical Sophistication**: Does the question demonstrate clever logical design that requires multi-step thinking, is **free from logical gaps or fallacies**, and presents a **genuinely challenging and sound** multi-hop problem?
+   - **Logical Sophistication**: Does the question demonstrate non-trivial and sound logical design that requires multi-step thinking, is **free from logical gaps or fallacies**, and presents a **genuinely challenging and sound** multi-hop problem?
 
 **Critical Scoring Guidance:**
 - **Penalize Logical Flaws Heavily:** Pay *extremely close attention* to **Consistency**, **Logical Sophistication**, and **Information Integration Ability**. Flaws in these areas represent significant shortcomings. Such shortcomings **must** be reflected in **markedly lower scores** (likely 'Poor' or 'Very Poor') for these dimensions. Furthermore, consider if these logical flaws negatively impact other dimensions like **Clarity**, **Question Answerability**, or **Answer-Question Consistency**, and adjust those ratings downwards accordingly. A question with significant logical flaws cannot be rated 'Good' or 'Very Good' overall, even if linguistically sound.
@@ -868,9 +868,9 @@ You are a **strict and discerning** Multi-Hop Question Answering (MHQA) dataset 
    - **Consistency**: Is the information in the question **completely and strictly** consistent with the provided passages, without **any** contradictions or hallucinations, **even subtle ones**?
    - **Question Answerability**: Can the exact question be clearly **and unambiguously** answered based **solely** on the given passages?
    - **Answer-Question Consistency**: Does the provided answer completely, accurately, and consistently address the question?
-   - **Information Integration Ability**: Does the question successfully **and logically** integrate information from multiple documents, requiring the answerer to connect different sources **without forcing unnatural connections**?
+   - **Information Integration Ability**: Does the question **coherently and logically** integrate information from multiple documents, requiring the answerer to connect different sources **without forcing unnatural connections**?
    - **Reasoning Path Guidance**: Does the question clearly guide the answerer through a multi-step reasoning process, rather than being overly vague or direct?
-   - **Logical Sophistication**: Does the question demonstrate clever logical design that requires multi-step thinking, is **free from logical gaps or fallacies**, and presents a **genuinely challenging and sound** multi-hop problem?
+   - **Logical Sophistication**: Does the question demonstrate non-trivial and sound logical design that requires multi-step thinking, is **free from logical gaps or fallacies**, and presents a **genuinely challenging and sound** multi-hop problem?
 
 **Critical Scoring Guidance:**
 - **Penalize Logical Flaws Heavily:** Pay *extremely close attention* to **Consistency**, **Logical Sophistication**, and **Information Integration Ability**. Flaws in these areas represent significant shortcomings. Such shortcomings **must** be reflected in **markedly lower scores** (likely 'Poor' or 'Very Poor') for these dimensions. Furthermore, consider if these logical flaws negatively impact other dimensions like **Clarity**, **Question Answerability**, or **Answer-Question Consistency**, and adjust those ratings downwards accordingly. A question with significant logical flaws cannot be rated 'Good' or 'Very Good' overall, even if linguistically sound.
