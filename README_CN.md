@@ -1,12 +1,11 @@
 <div align="center">
 
-# 🧵 HopWeaver: Synthesizing Authentic Multi-Hop Questions Across Text Corpora
+# 🧵 [ACL 2026] HopWeaver: Synthesizing Authentic Multi-Hop Questions Across Text Corpora
 
 <p><strong>首个基于非结构化文本语料库进行跨文档多跳问题自动合成的全自动化框架，无需人工标注</strong></p>
 
 <p align="center">
   <a href="https://arxiv.org/abs/2505.15087"><img src="https://img.shields.io/badge/arXiv-论文-B31B1B.svg" alt="arXiv"></a>
-  <img src="https://img.shields.io/badge/ACL%202026-Main%20Conference-blue.svg" alt="ACL 2026 Main">
   <a href="https://huggingface.co/datasets/Shenzy2/HopWeaver_Data"><img src="https://img.shields.io/badge/HuggingFace-数据集-FFD21E.svg" alt="HuggingFace 数据集"></a>
   <a href="https://www.modelscope.cn/datasets/szyszy/HopWeaver_Data"><img src="https://img.shields.io/badge/ModelScope-数据集-592EC6.svg" alt="ModelScope 数据集"></a>
   <a href="https://github.com/Zh1yuShen/HopWeaver/blob/main/LICENSE"><img src="https://img.shields.io/badge/许可证-MIT-lightgrey.svg" alt="License: MIT"></a>
